@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.calcBtn)
         button.setOnClickListener {
             val calendar = Calendar.getInstance()
-            DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            val dataPick = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val date = Calendar.getInstance()
                 date.set(year, month, dayOfMonth)
 
@@ -50,10 +50,10 @@ class MainActivity : AppCompatActivity() {
                 monthTillDateText.text = "$tillMonth"
                 yearTillDateText.text = "$tillYear"
 
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
-
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
-
+            dataPick.datePicker.maxDate = Date().time // Set the max date to today so that the user can't select a date in the future
+            dataPick.show()
             dataLay.visibility = View.VISIBLE
         }
 
@@ -80,8 +80,5 @@ class MainActivity : AppCompatActivity() {
     fun calcYearsTillDate(date : Calendar): Int {
         return calcMonthsTillDate(date) / 12
     }
-
-
-
 }
 
